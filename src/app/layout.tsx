@@ -1,16 +1,15 @@
-// src/app/layout.tsx
+import './globals.css';
+import Navbar from '@/components/Navbar';
+import SimpleBottomNavigation from '@/components/Navbar';
 
-import React from 'react';
-import Navbar from '../components/Navbar';
-import './globals.css'; // Import your global styles
-
-const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{ paddingBottom: '56px' }}> {/* Add padding to avoid overlap */}
-      {children}
-      <Navbar />
-    </div>
+    <html lang="en">
+      <body>
+        <Navbar />
+        <main>{children}</main>
+        <SimpleBottomNavigation />
+      </body>
+    </html>
   );
-};
-
-export default Layout;
+}
