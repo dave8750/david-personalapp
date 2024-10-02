@@ -23,3 +23,5 @@ git config --global user.email "" //config na mail
 git remote -v //zobrazi zoznam 
 
 ls -R src | sed 's/^/  /; /^$/d'
+
+find . -path ./node_modules -prune -o -path ./.next -prune -o -path ./.git -prune -o -print

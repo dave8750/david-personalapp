@@ -3,8 +3,8 @@ import Typography from '@mui/material/Typography';
 
 export const metadata = {title: 'Domov | Zoškasnap'};
 
-export default function PrispepokID() {
+export default function komenty() {
   return (
-    <Typography>Prispevky</Typography>
+    <Typography>Komenty</Typography>
   );
 }

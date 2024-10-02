@@ -6,11 +6,14 @@ import Container from '@mui/material/Container';
 export const metadata = {title: 'Detail profilu| Zoškasnap'};
 
 
-export default function ProfilDetail() {
-  return (
+export default function ProfilID({params}: {
+  params: {id: string}
+}) {
+  return(
     <Container>
-        <Typography>Detail profilu</Typography>
+    <Typography>detail o profile {params.id}</Typography>
     </Container>
-    
-  );
+  )
+
+  
 }

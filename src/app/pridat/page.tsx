@@ -1,4 +1,4 @@
-// src/app/(home)/page.tsx
+// src/app/pridat/page.tsx
 import Typography from '@mui/material/Typography';
 
 export const metadata = {title: 'Pridat | Zoškasnap'};
