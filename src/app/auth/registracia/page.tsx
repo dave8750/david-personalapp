@@ -1,10 +1,25 @@
-// src/app/(home)/page.tsx
+"use client"; // Ensures this is a Client Component
+
+import { signIn } from "next-auth/react";
+import React from 'react';
 import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
-export const metadata = {title: 'Registracia | Zoškasnap'};
-
-export default function SignUp() {
+export default function RegisterPage() {
   return (
-    <Typography>Registracia</Typography>
+    <Box sx={{ p: 3, textAlign: 'center' }}>
+      <Typography variant="h4" component="h1" gutterBottom>
+        Register for ZoškaSnap
+      </Typography>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => signIn('google', { callbackUrl: '/' })}
+        sx={{ mt: 3 }}
+      >
+        Register with Google
+      </Button>
+    </Box>
   );
 }
