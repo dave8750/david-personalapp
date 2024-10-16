@@ -1,10 +1,8 @@
 "use client"; // Ensures client-side rendering for interactivity
 
-import { signOut } from "next-auth/react";
 import { Session } from "next-auth";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 
 interface Props {
   session: Session;
