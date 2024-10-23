@@ -13,3 +13,5 @@ export default async function HomePage() {
   // Session exists -> Registered user (signed in), else non-registered
   return session ? <AuthHomeView session={session} /> : <NonAuthHomeView />;
 }
+
+
