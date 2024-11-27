@@ -1,19 +1,21 @@
+// src/app/layout.tsx
 import './globals.css';
 import Navbar from '@/components/Navbar';
-import SimpleBottomNavigation from '@/components/Navbar';
-import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/authOptions"; // Ensure this path is correct
+import { SessionProvider } from 'next-auth/react'; // Import SessionProvider here
+import { AuthProvider } from './(public)/auth/layout';
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  // Fetch the session on the server
-  const session = await getServerSession(authOptions);
 
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <Navbar session={session} /> {/* Pass session to Navbar */}
-        <main>{children}</main>
-        <SimpleBottomNavigation session={session} /> {/* Pass session to SimpleBottomNavigation */}
+        {/* Wrap the app in the SessionProvider to provide session context */}
+        <SessionProvider>
+          <AuthProvider>
+            <Navbar />
+            <main>{children}</main>
+          </AuthProvider>
+        </SessionProvider>
       </body>
     </html>
   );
