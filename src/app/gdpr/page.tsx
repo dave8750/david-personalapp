@@ -5,6 +5,6 @@ export const metadata = {title: 'GDPR | Zoškasnap'};
 
 export default function Gdpr() {
   return (
-    <Typography>GDPR</Typography>
+    <Typography>GDPRR</Typography>
   );
 }
