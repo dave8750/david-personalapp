@@ -2,14 +2,10 @@
 
 "use client";
 
-import {
-  Button,
-  Container,
-  Typography,
-} from "@mui/material";
 import { signIn } from "next-auth/react";
 import GoogleIcon from "@mui/icons-material/Google";
-import GitHubIcon from "@mui/icons-material/GitHub"; // Import GitHub icon
+import GitHubIcon from "@mui/icons-material/GitHub";
+import { Container, Typography, Button } from "@mui/material";
 
 export default function SignInView() {
   return (
@@ -26,12 +22,12 @@ export default function SignInView() {
         borderRadius: 2,
       }}
     >
-      {/* Logo / Title */}
-      <Typography variant="h5" sx={{ mb: 3, color: "text.primary" }}> {/* Using primary text color */}
-        Prihlásenie
+      {/* Title */}
+      <Typography variant="h5" sx={{ mb: 3, color: "text.primary" }}>
+        Prihlásiť sa
       </Typography>
 
-      {/* Google Sign In */}
+      {/* Google Sign In Button */}
       <Button
         variant="outlined"
         fullWidth
@@ -39,19 +35,19 @@ export default function SignInView() {
         onClick={() => signIn("google")}
         sx={{
           mb: 1,
-          borderRadius: 2, // Custom border-radius for Google button
-          color: "primary.main", // Using primary color from theme
-          borderColor: "primary.main", // Set border color to primary
+          borderRadius: 2, // Custom border-radius for Google button (you can remove this if you prefer theme styling)
+          color: "primary.main", // Color from the theme (primary color)
+          borderColor: "primary.main", // Set border color to primary color
           '&:hover': {
-            backgroundColor: "primary.main",
-            color: "#fff", // Change text color when hovering
+            backgroundColor: "primary.main", // Background color on hover
+            color: "#fff", // Text color on hover
           },
         }}
       >
         Prihlásiť sa účtom Google
       </Button>
 
-      {/* GitHub Sign In */}
+      {/* GitHub Sign In Button */}
       <Button
         variant="outlined"
         fullWidth
@@ -60,11 +56,11 @@ export default function SignInView() {
         sx={{
           mb: 1,
           borderRadius: 2, // Custom border-radius for GitHub button
-          color: "secondary.main", // Using secondary color from theme
-          borderColor: "secondary.main", // Set border color to secondary
+          color: "secondary.main", // Color from the theme (secondary color)
+          borderColor: "secondary.main", // Set border color to secondary color
           '&:hover': {
-            backgroundColor: "secondary.main",
-            color: "#fff", // Change text color when hovering
+            backgroundColor: "secondary.main", // Background color on hover
+            color: "#fff", // Text color on hover
           },
         }}
       >
