@@ -21,34 +21,52 @@ export default function SignInView() {
         alignItems: "center",
         mt: 5,
         p: 3,
-        bgcolor: "background.paper",
+        bgcolor: "background.paper", // Background color from theme
         boxShadow: 3,
         borderRadius: 2,
       }}
     >
       {/* Logo / Title */}
-      <Typography variant="h5" sx={{ mb: 3 }}>
+      <Typography variant="h5" sx={{ mb: 3, color: "text.primary" }}> {/* Using primary text color */}
         Prihlásenie
       </Typography>
 
-      {/* Google Sign Up */}
+      {/* Google Sign In */}
       <Button
         variant="outlined"
         fullWidth
         startIcon={<GoogleIcon />}
         onClick={() => signIn("google")}
-        sx={{ mb: 1 }}
+        sx={{
+          mb: 1,
+          borderRadius: 2, // Custom border-radius for Google button
+          color: "primary.main", // Using primary color from theme
+          borderColor: "primary.main", // Set border color to primary
+          '&:hover': {
+            backgroundColor: "primary.main",
+            color: "#fff", // Change text color when hovering
+          },
+        }}
       >
         Prihlásiť sa účtom Google
       </Button>
 
-      {/* GitHub Sign Up */}
+      {/* GitHub Sign In */}
       <Button
         variant="outlined"
         fullWidth
-        startIcon={<GitHubIcon />} // Add GitHub icon
-        onClick={() => signIn("github")} // Handle GitHub sign-in
-        sx={{ mb: 1 }}
+        startIcon={<GitHubIcon />}
+        onClick={() => signIn("github")}
+        sx={{
+          mb: 1,
+          borderRadius: 2, // Custom border-radius for GitHub button
+          color: "secondary.main", // Using secondary color from theme
+          borderColor: "secondary.main", // Set border color to secondary
+          '&:hover': {
+            backgroundColor: "secondary.main",
+            color: "#fff", // Change text color when hovering
+          },
+        }}
       >
         Prihlásiť sa účtom GitHub
       </Button>
