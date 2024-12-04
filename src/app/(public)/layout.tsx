@@ -1,23 +1,19 @@
-// src/app/layout.tsx (Server Component)
-import './globals.css';
-import Navbar from '@/components/Navbar';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '../api/auth/[...nextauth]/authOptions';
+// src/app/(public)/layout.tsx
+"use client"; // This marks the component as a client component
 
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  // Fetch the session on the server side
-  const session = await getServerSession(authOptions);
+export default function PublicLayout({ children }: { children: React.ReactNode }) {
+  const { data: session } = useSession();
+  const router = useRouter();
 
-  return (
-    <html lang="en">
-      <body>
-        {/* Wrap the layout in the ClientSessionWrapper to provide the session data */}
-        <ClientSessionWrapper session={session}>
-          <Navbar session={session} />
-          <main>{children}</main>
-        </ClientSessionWrapper>
-      </body>
-    </html>
-  );
+  useEffect(() => {
+    if (session) {
+      router.push("/");
+    }
+  }, [session, router]);
+
+  return <div>{children}</div>;
 }

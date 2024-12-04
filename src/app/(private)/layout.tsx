@@ -1,12 +1,10 @@
-// File: src/app/(private)/layout.tsx
-import AuthGuard from '../../components/AuthGuard';
+// src/app/(private)/layout.tsx
+import AuthKeeper from "../../components/AuthKeeper";
 
 export default function PrivateLayout({ children }: { children: React.ReactNode }) {
-    return (
-        <AuthGuard>
-            <div className="private-layout">
-                <main>{children}</main>
-            </div>
-        </AuthGuard>
-    );
+  return (
+    <AuthKeeper>
+      <div>{children}</div>
+    </AuthKeeper>
+  );
 }

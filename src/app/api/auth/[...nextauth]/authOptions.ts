@@ -1,9 +1,8 @@
 // src/app/api/auth/[...nextauth]/authOptions.ts
-
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import { prisma } from "./prisma"
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { prisma } from "./prisma";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),

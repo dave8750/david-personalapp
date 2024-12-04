@@ -1,20 +1,15 @@
-
 // src/sections/SignInView.tsx
 
 "use client";
 
 import {
-    Button,
-    //Checkbox,
-    Container,
-    //FormControlLabel,
-    //TextField,
-    Typography,
-    //Divider,
-  } from "@mui/material";
-  import { signIn } from "next-auth/react";
-  import GoogleIcon from "@mui/icons-material/Google";
-  //import FacebookIcon from "@mui/icons-material/Facebook";
+  Button,
+  Container,
+  Typography,
+} from "@mui/material";
+import { signIn } from "next-auth/react";
+import GoogleIcon from "@mui/icons-material/Google";
+import GitHubIcon from "@mui/icons-material/GitHub"; // Import GitHub icon
 
 export default function SignInView() {
   return (
@@ -47,62 +42,16 @@ export default function SignInView() {
         Prihlásiť sa účtom Google
       </Button>
 
-
+      {/* GitHub Sign Up */}
+      <Button
+        variant="outlined"
+        fullWidth
+        startIcon={<GitHubIcon />} // Add GitHub icon
+        onClick={() => signIn("github")} // Handle GitHub sign-in
+        sx={{ mb: 1 }}
+      >
+        Prihlásiť sa účtom GitHub
+      </Button>
     </Container>
   );
 }
-
-
-      // {/* Facebook Sign Up */}
-      // <Button
-      //   variant="outlined"
-      //   fullWidth
-      //   startIcon={<FacebookIcon />}
-      //   sx={{ mb: 4 }}
-      // >
-      //   Prihlásiť sa účtom Facebook
-      // </Button>
-
-      // {/* Divider */}
-      // <Divider sx={{ width: "100%", mb: 2 }}>
-      //   <Typography variant="body2">alebo</Typography>
-      // </Divider>
-
-      // {/* Email */}
-      // <TextField
-      //   margin="normal"
-      //   fullWidth
-      //   label="Email"
-      //   type="email"
-      //   variant="outlined"
-      //   required
-      //   defaultValue="your@email.com"
-      // />
-
-      // {/* Password */}
-      // <TextField
-      //   margin="normal"
-      //   fullWidth
-      //   label="Password"
-      //   type="password"
-      //   variant="outlined"
-      //   required
-      //   defaultValue="******"
-      // />
-
-      // {/* Checkbox */}
-      // <FormControlLabel
-      //   control={<Checkbox color="primary" />}
-      //   label="Chcem dostávať novinky na email"
-      //   sx={{ mt: 2 }}
-      // />
-
-      // {/* Sign Up Button */}
-      // <Button
-      //   variant="contained"
-      //   fullWidth
-      //   size="large"
-      //   sx={{ mt: 2, mb: 1 }}
-      // >
-      //   Prihlásiť
-      // </Button>
