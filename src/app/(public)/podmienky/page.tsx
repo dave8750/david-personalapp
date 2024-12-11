@@ -1,16 +1,9 @@
-// src/app/podmienky/page.tsx
+// src/app/termsview/page.tsx
+import TermsView from "@/views/public/TermsConditionsView";
 
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+export const metadata = { title: "Terms and Conditions | ZoškaSnap" };
 
+// Terms Page Component
+const TermsPage = () => <TermsView />;
 
-export const metadata = {title: 'Podmienky | Zoškasnap'};
-
-export default function TermsCondition() {
-  return (
-    <Container>
-        <Typography>Podmienky používaniaaaa</Typography>
-    </Container>
-    
-  );
-}
+export default TermsPage;
