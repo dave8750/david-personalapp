@@ -16,7 +16,7 @@ export default function HomeLayout({ children }: { children: ReactNode }) {
 
   if (status === "loading") {
     // Show a loading message while checking session status
-    return <Typography>Loading...</Typography>;
+    return <Typography>Loading....</Typography>;
   }
 
   if (status === "unauthenticated") {
