@@ -18,7 +18,7 @@ import { useTheme } from "../app/providers/ThemeProvider"; // Import the custom 
 export default function Navbar() {
   const [value, setValue] = React.useState('/');
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const { toggleTheme, isDarkMode } = useTheme(); // Access theme context
 
   const handleNavigation = (event: React.SyntheticEvent, newValue: string) => {
