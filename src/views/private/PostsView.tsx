@@ -26,11 +26,21 @@ interface User {
   emailVerified: Date | null;
 }
 
+interface PostData {
+  id: string;
+  userId: string;
+  imageUrl: string;
+  caption: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  user: User;
+}
+
 interface Post {
   id: number;
   title: string;
   content: string;
-  imageUrl: string; // This should be the image of the post, not the user
+  imageUrl: string;
   user: User;
   caption: string | null;
   createdAt: Date;
@@ -48,8 +58,8 @@ const PostView = () => {
         const data = await fetchPosts();
 
         // Map the fetched data to match the Post interface
-        const postsData: Post[] = data.map((post: any) => ({
-          id: post.id,
+        const postsData: Post[] = data.map((post: PostData) => ({
+          id: parseInt(post.id), // assuming id is a string and needs conversion
           title: post.caption || "Untitled", // Use caption or fallback if missing
           content: post.caption || "No content available", // Fallback if caption is missing
           imageUrl: post.imageUrl || "/default-image.jpg", // Ensure the post image URL is used
