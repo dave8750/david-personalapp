@@ -10,15 +10,15 @@ const aboutContent = {
     socialLinks: [
       {
         name: "Facebook",
-        url: "https://www.facebook.com"
+        url: "https://www.facebook.com/spsezochova/"
       },
       {
         name: "Instagram",
-        url: "https://www.instagram.com"
+        url: "https://www.instagram.com/spsezochova/"
       },
       {
         name: "Naša škola", // School link
-        url: "https://www.spszochova9.sk"
+        url: "https://zochova.sk/"
       }
     ]
   };

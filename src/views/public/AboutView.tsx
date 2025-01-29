@@ -2,7 +2,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 
-// Import the content
+// Import the content (make sure this import is pointing to your actual content file)
 import aboutContent from "@/content/aboutContent";
 
 const AboutView = () => {
@@ -18,7 +18,8 @@ const AboutView = () => {
         {aboutContent.introduction}
       </Typography>
 
-      <div> {/* Use <div> here instead of <Typography> for the social links */}
+      {/* Social Links */}
+      <div>
         {aboutContent.socialLinks.map((link, index) => (
           <div key={index}>
             <Link href={link.url} target="_blank" rel="noopener noreferrer">

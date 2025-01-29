@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Button, Container, Typography, Checkbox, FormControlLabel, Link as MuiLink } from "@mui/material";
 import { signIn } from "next-auth/react";
 import GoogleIcon from "@mui/icons-material/Google";
@@ -7,12 +8,29 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import NextLink from "next/link"; // Import Next.js Link
 
 const SignUpView = () => {
+  const [isChecked, setIsChecked] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(""); // State for error message
+
   const handleSignInWithGoogle = () => {
-    signIn("google");
+    if (!isChecked) {
+      setErrorMessage("Zaškrtnite prosím pole uvedené nižšie.");
+    } else {
+      signIn("google");
+    }
   };
 
   const handleSignInWithGitHub = () => {
-    signIn("github");
+    if (!isChecked) {
+      setErrorMessage("Zaškrtnite prosím pole uvedené nižšie.");
+    } else {
+      signIn("github");
+    }
+  };
+
+  // Explicitly typing the event parameter
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsChecked(event.target.checked);
+    setErrorMessage(""); // Clear the error message when checkbox is checked
   };
 
   return (
@@ -90,9 +108,16 @@ const SignUpView = () => {
           Registrovať sa účtom GitHub
         </Button>
 
-        {/* GDPR and Terms */}
+        {/* Error message */}
+        {errorMessage && (
+          <Typography variant="body2" color="error" sx={{ mt: 1, textAlign: "center" }}>
+            {errorMessage}
+          </Typography>
+        )}
+
+        {/* GDPR and Terms Checkbox */}
         <FormControlLabel
-          control={<Checkbox color="primary" />}
+          control={<Checkbox checked={isChecked} onChange={handleCheckboxChange} color="primary" />}
           label={
             <Typography variant="body2" color="text.secondary">
               Súhlasím s{" "}

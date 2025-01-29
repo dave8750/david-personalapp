@@ -1,10 +1,8 @@
-// src/app/(home)/page.tsx
-import Typography from '@mui/material/Typography';
+// In this file, you can export the metadata
+export const metadata = { title: "Príspevky | ZoškaSnap" };
 
-export const metadata = {title: 'Domov | Zoškasnap'};
+import PostsView from "@/views/private/PostsView";
 
-export default function prispevok() {
-  return (
-    <Typography>Prispevky</Typography>
-  );
-}
+const PostsPage = () => <PostsView />;
+
+export default PostsPage;
