@@ -1,25 +1,55 @@
-"use client"; // Ensures client-side rendering for interactivity
+// src/app/(home)/NonAuthHomeView.tsx
 
-import { signIn } from "next-auth/react";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 
 export default function NonAuthHomeView() {
   return (
-    <Box sx={{ p: 3, textAlign: "center" }}>
-      <Typography variant="h4">Welcome to ZoškaSnap</Typography>
-      <Typography variant="body1">
-        You are currently not logged in. Please sign in or register to explore the full features.
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      minHeight="100vh"
+    >
+      <Typography variant="h4" gutterBottom>
+        Vitajte na SnapZoška!
       </Typography>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => signIn('google', { callbackUrl: '/' })}
-        sx={{ mt: 3 }}
-      >
-        Login with Google
-      </Button>
+      <Typography variant="body1" paragraph>
+        Nie ste prihlásený. Pre prístup k plným funkciám sa prihláste alebo zaregistrujte.
+      </Typography>
+      <Box display="flex" gap={2}>
+        <Button
+          variant="contained"
+          color="primary"
+          href="auth/prihlasenie"
+          sx={{
+            "&:hover": {
+              backgroundColor: "#3f51b5",
+              transform: "scale(1.05)",
+              transition: "all 0.3s ease",
+            },
+          }}
+        >
+          Prihlásiť sa
+        </Button>
+        <Button
+          variant="outlined"
+          color="primary"
+          href="auth/registracia"
+          sx={{
+            "&:hover": {
+              borderColor: "#3f51b5",
+              color: "#3f51b5",
+              transform: "scale(1.05)",
+              transition: "all 0.3s ease",
+            },
+          }}
+        >
+          Registrovať sa
+        </Button>
+      </Box>
     </Box>
   );
 }
