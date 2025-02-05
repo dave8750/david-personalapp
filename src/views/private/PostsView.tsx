@@ -1,4 +1,4 @@
-"use client"; // ✅ Ensure this is at the very top
+"use client"; // Add this line at the top to mark the component as a client component
 
 import { useEffect, useState } from "react";
 
@@ -37,7 +37,7 @@ interface PostData {
 }
 
 interface Post {
-  id: number;
+  id: number; // Changed to number for consistency
   title: string;
   content: string;
   imageUrl: string;
@@ -58,16 +58,22 @@ const PostView = () => {
         const data = await fetchPosts();
 
         // Map the fetched data to match the Post interface
-        const postsData: Post[] = data.map((post: PostData) => ({
-          id: parseInt(post.id), // assuming id is a string and needs conversion
-          title: post.caption || "Untitled", // Use caption or fallback if missing
-          content: post.caption || "No content available", // Fallback if caption is missing
-          imageUrl: post.imageUrl || "/default-image.jpg", // Ensure the post image URL is used
-          user: post.user, // Directly use the user object
-          caption: post.caption,
-          createdAt: post.createdAt,
-          updatedAt: post.updatedAt,
-        }));
+        const postsData: Post[] = data.map((post: PostData) => {
+          // Ensure the id is a valid number or use a fallback key
+          const postId = parseInt(post.id);
+          const validId = !isNaN(postId) ? postId : Date.now(); // Fallback to the current timestamp if invalid
+
+          return {
+            id: validId, // Ensure it's always a number
+            title: post.caption || "Untitled", // Use caption or fallback if missing
+            content: post.caption || "No content available", // Fallback if caption is missing
+            imageUrl: post.imageUrl || "/default-image.jpg", // Ensure the post image URL is used
+            user: post.user, // Directly use the user object
+            caption: post.caption,
+            createdAt: post.createdAt,
+            updatedAt: post.updatedAt,
+          };
+        });
 
         setPosts(postsData);
       } catch (err) {
@@ -101,9 +107,9 @@ const PostView = () => {
         gap={4}
         sx={{ marginBottom: 4 }}
       >
-        {posts.map((post) => (
+        {posts.map((post, index) => (
           <Box
-            key={post.id}
+            key={`${post.id}-${index}`} // Ensure each Box has a unique key
             sx={{
               width: { xs: "100%", sm: "48%", md: "30%" }, // Adjust size based on screen size
               height: "auto", // Ensure consistent height
