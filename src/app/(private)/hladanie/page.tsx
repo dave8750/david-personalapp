@@ -1,10 +1,8 @@
 // src/app/(home)/page.tsx
-import Typography from '@mui/material/Typography';
+import FindView from "@/views/private/FindView";
 
 export const metadata = {title: 'Hladanie | Zoškasnap'};
 
-export default function Find() {
-  return (
-    <Typography>Hladanie</Typography>
-  );
+export default function SearchPage() {
+  return <FindView />;
 }

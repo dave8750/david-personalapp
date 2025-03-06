@@ -10,7 +10,12 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
-import Box from "@mui/material/Box"; // Import Box component
+import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import ShareIcon from '@mui/icons-material/Share';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 // Server action import
 import { fetchPosts } from "@/app/actions/posts";
@@ -51,6 +56,7 @@ const PostView = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [likedPosts, setLikedPosts] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     const loadPosts = async () => {
@@ -87,7 +93,7 @@ const PostView = () => {
   }, []);
 
   return (
-    <Container>
+    <Container maxWidth="sm" sx={{ py: 4 }}>
       <Typography variant="h4" sx={{ my: 4 }}>
         Nedávne príspevky
       </Typography>
@@ -100,43 +106,80 @@ const PostView = () => {
 
       {error && <Alert severity="error">{error}</Alert>}
 
-      <Box
-        display="flex"
-        flexWrap="wrap"
-        justifyContent="space-between"
-        gap={4}
-        sx={{ marginBottom: 4 }}
-      >
+      <Box display="flex" flexDirection="column" gap={4}>
         {posts.map((post, index) => (
-          <Box
-            key={`${post.id}-${index}`} // Ensure each Box has a unique key
-            sx={{
-              width: { xs: "100%", sm: "48%", md: "30%" }, // Adjust size based on screen size
-              height: "auto", // Ensure consistent height
-            }}
-          >
-            <Card sx={{ height: "100%" }}>
-              <CardMedia
-                component="img"
-                height="200"
-                image={post.imageUrl} // Use the correct image URL for the post
-                alt={post.title}
-                sx={{ objectFit: "cover" }} // Ensure the image scales properly
-              />
-              <CardContent sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
-                {/* Display the user's name inside the CardContent */}
-                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                  {post.user.name || "Anonymous User"} {/* Fallback to "Anonymous User" if name is null */}
+          <Card key={`${post.id}-${index}`} sx={{ width: '100%' }}>
+            {/* User header */}
+            <Box sx={{ p: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Avatar
+                src={post.user.image || undefined}
+                alt={post.user.name || 'User'}
+                sx={{ width: 32, height: 32 }}
+              >
+                {post.user.name?.[0] || 'U'}
+              </Avatar>
+              <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
+                {post.user.name || 'Anonymous User'}
+              </Typography>
+            </Box>
+
+            {/* Post image */}
+            <CardMedia
+              component="img"
+              image={post.imageUrl}
+              alt={post.title}
+              sx={{ 
+                width: '100%',
+                height: 'auto',
+                objectFit: 'cover',
+                aspectRatio: '1/1'
+              }}
+            />
+
+            {/* Action buttons */}
+            <Box sx={{ p: 1, display: 'flex', gap: 1 }}>
+              <Box sx={{ display: 'flex', gap: 1 }}>
+                {likedPosts.has(post.id) ? (
+                  <FavoriteIcon 
+                    sx={{ color: 'red', cursor: 'pointer' }}
+                    onClick={() => {
+                      const newLikedPosts = new Set(likedPosts);
+                      newLikedPosts.delete(post.id);
+                      setLikedPosts(newLikedPosts);
+                    }}
+                  />
+                ) : (
+                  <FavoriteBorderIcon 
+                    sx={{ cursor: 'pointer' }}
+                    onClick={() => {
+                      const newLikedPosts = new Set(likedPosts);
+                      newLikedPosts.add(post.id);
+                      setLikedPosts(newLikedPosts);
+                    }}
+                  />
+                )}
+                <ChatBubbleOutlineIcon sx={{ cursor: 'pointer' }} />
+                <ShareIcon sx={{ cursor: 'pointer' }} />
+              </Box>
+            </Box>
+
+            {/* Likes count */}
+            <Box sx={{ px: 1 }}>
+              <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
+                {likedPosts.has(post.id) ? '1 like' : '0 likes'}
+              </Typography>
+            </Box>
+
+            {/* Caption */}
+            {post.caption && (
+              <Box sx={{ px: 1, pb: 1 }}>
+                <Typography variant="body2">
+                  <span style={{ fontWeight: 'bold' }}>{post.user.name || 'Anonymous User'}</span>{' '}
+                  {post.caption}
                 </Typography>
-                <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                  {post.title}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {post.content}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Box>
+              </Box>
+            )}
+          </Card>
         ))}
       </Box>
     </Container>
