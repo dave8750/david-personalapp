@@ -1,8 +1,11 @@
-// In this file, you can export the metadata
-export const metadata = { title: "Príspevky | ZoškaSnap" };
+import { Metadata } from "next";
+import FeedView from "@/views/private/FeedView";
 
-import PostsView from "@/views/private/PostsView";
+export const metadata: Metadata = {
+  title: "Hlavná stránka | ZoškaGram",
+  description: "Prezerajte si príspevky od vašich spolužiakov a priateľov."
+};
 
-const PostsPage = () => <PostsView />;
-
-export default PostsPage;
+export default function FeedPage() {
+  return <FeedView />;
+} 
