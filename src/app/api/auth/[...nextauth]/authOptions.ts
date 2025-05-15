@@ -18,7 +18,19 @@ export const authOptions: NextAuthOptions = {
     signOut: '/auth/odhlasenie',
   },
   callbacks: {
-    async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
+    async session({ session, user }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          image: user.image,
+        },
+      };
+    },
+    async redirect({ url, baseUrl }) {
       // Redirect to home page after sign-in
       return baseUrl || url; // baseUrl is automatically set from NEXTAUTH_URL in .env
     },

@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { formatDistanceToNow } from "date-fns";
 import { sk } from "date-fns/locale";
+import { useRouter } from "next/navigation";
 
 // MUI Component imports
 import {
@@ -140,6 +141,7 @@ type OptimisticUpdate = {
 const FeedView = () => {
   // Hooks
   const { data: session } = useSession();
+  const router = useRouter();
   
   // State
   const [posts, setPosts] = useState<Post[]>([]);
@@ -469,6 +471,10 @@ const FeedView = () => {
     }
   };
 
+  const handleUserClick = (userId: string) => {
+    router.push(`/profil/${userId}`);
+  };
+
   // Main render
   if (loading) {
     return (
@@ -589,7 +595,9 @@ const FeedView = () => {
                     sx={{
                       background: 'linear-gradient(45deg, #FF385C, #1DA1F2)',
                       border: '2px solid white',
+                      cursor: 'pointer',
                     }}
+                    onClick={() => handleUserClick(post.userId)}
                   >
                     {post.user.name?.[0] || "U"}
                   </Avatar>
@@ -597,6 +605,7 @@ const FeedView = () => {
                 title={
                   <Typography 
                     variant="subtitle1" 
+                    onClick={() => handleUserClick(post.userId)}
                     sx={{ 
                       fontWeight: 600,
                       cursor: 'pointer',
@@ -724,6 +733,7 @@ const FeedView = () => {
                   <Typography variant="body2" sx={{ mt: 1 }}>
                     <Typography 
                       component="span" 
+                      onClick={() => handleUserClick(post.userId)}
                       sx={{ 
                         fontWeight: 600,
                         mr: 0.5,
@@ -763,6 +773,7 @@ const FeedView = () => {
                         <Typography variant="body2" sx={{ flexGrow: 1 }}>
                           <Typography 
                             component="span" 
+                            onClick={() => handleUserClick(comment.userId)}
                             sx={{ 
                               fontWeight: 600,
                               mr: 0.5,

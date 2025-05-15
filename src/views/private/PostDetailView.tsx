@@ -20,6 +20,8 @@ import {
   CircularProgress,
   Alert,
   Snackbar,
+  CardHeader,
+  CardContent,
 } from "@mui/material";
 import {
   Favorite,
@@ -138,6 +140,10 @@ const PostDetailView = ({ postId }: PostDetailViewProps) => {
     }
   };
 
+  const handleUserClick = (userId: string) => {
+    router.push(`/profil/${userId}`);
+  };
+
   if (loading) {
     return (
       <Box
@@ -178,25 +184,37 @@ const PostDetailView = ({ postId }: PostDetailViewProps) => {
         {/* Post content */}
         <Paper elevation={0} sx={{ borderRadius: 2, overflow: "hidden" }}>
           {/* Post header */}
-          <Box sx={{ p: 2, display: "flex", alignItems: "center" }}>
-            <Link href={`/profily/${post.userId}`} style={{ textDecoration: "none" }}>
+          <CardHeader
+            avatar={
               <Avatar
                 src={post.user?.image || undefined}
                 alt={post.user?.name || "User"}
-                sx={{ mr: 2 }}
-              />
-            </Link>
-            <Box>
-              <Link href={`/profily/${post.userId}`} style={{ textDecoration: "none" }}>
-                <Typography variant="subtitle1" fontWeight="bold">
-                  {post.user?.name}
-                </Typography>
-              </Link>
-              <Typography variant="caption" color="text.secondary">
-                {new Date(post.createdAt).toLocaleDateString("sk-SK")}
+                sx={{
+                  background: 'linear-gradient(45deg, #FF385C, #1DA1F2)',
+                  border: '2px solid white',
+                  cursor: 'pointer',
+                }}
+                onClick={() => handleUserClick(post.userId)}
+              >
+                {post.user?.name?.[0] || "U"}
+              </Avatar>
+            }
+            title={
+              <Typography 
+                variant="subtitle1" 
+                onClick={() => handleUserClick(post.userId)}
+                sx={{ 
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  '&:hover': {
+                    color: 'primary.main',
+                  },
+                }}
+              >
+                {post.user?.name}
               </Typography>
-            </Box>
-          </Box>
+            }
+          />
 
           {/* Post images */}
           {post.images && post.images.length > 0 && (
@@ -204,7 +222,7 @@ const PostDetailView = ({ postId }: PostDetailViewProps) => {
           )}
 
           {/* Post actions */}
-          <Box sx={{ p: 2 }}>
+          <CardContent sx={{ pt: 1 }}>
             <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
               <IconButton onClick={handleLike} disabled={loading}>
                 {post.likes?.some(like => like.userId === session?.user?.id) ? (
@@ -224,7 +242,21 @@ const PostDetailView = ({ postId }: PostDetailViewProps) => {
 
             {/* Post caption */}
             {post.caption && (
-              <Typography variant="body1" sx={{ mb: 2 }}>
+              <Typography variant="body2" sx={{ mt: 1 }}>
+                <Typography 
+                  component="span" 
+                  onClick={() => handleUserClick(post.userId)}
+                  sx={{ 
+                    fontWeight: 600,
+                    mr: 0.5,
+                    cursor: 'pointer',
+                    '&:hover': {
+                      color: 'primary.main',
+                    },
+                  }}
+                >
+                  {post.user?.name}
+                </Typography>
                 {post.caption}
               </Typography>
             )}
@@ -240,10 +272,25 @@ const PostDetailView = ({ postId }: PostDetailViewProps) => {
                     <Avatar
                       src={comment.user?.image || undefined}
                       alt={comment.user?.name || "User"}
-                      sx={{ width: 32, height: 32, mr: 1 }}
+                      sx={{ width: 32, height: 32, mr: 1, cursor: 'pointer' }}
+                      onClick={() => handleUserClick(comment.userId)}
                     />
                     <Typography variant="body2">
-                      <strong>{comment.user?.name}</strong> {comment.content}
+                      <Typography 
+                        component="span" 
+                        onClick={() => handleUserClick(comment.userId)}
+                        sx={{ 
+                          fontWeight: 600,
+                          mr: 0.5,
+                          cursor: 'pointer',
+                          '&:hover': {
+                            color: 'primary.main',
+                          },
+                        }}
+                      >
+                        {comment.user?.name}
+                      </Typography>
+                      {comment.content}
                     </Typography>
                   </Box>
                   <Typography variant="caption" color="text.secondary">
@@ -277,7 +324,7 @@ const PostDetailView = ({ postId }: PostDetailViewProps) => {
                 </IconButton>
               </Box>
             )}
-          </Box>
+          </CardContent>
         </Paper>
       </Box>
 

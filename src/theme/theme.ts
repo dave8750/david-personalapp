@@ -59,7 +59,7 @@ const darkPalette = {
     main: '#90caf9', // Light blue for primary elements
   },
   secondary: {
-    main: '#00bcd4  ', // Purple (better for contrast)
+    main: '#00bcd4', // Fixed: removed extra spaces
   },
   background: {
     default: '#181818', // Slightly lighter dark background

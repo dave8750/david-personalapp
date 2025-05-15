@@ -1,28 +1,28 @@
 "use client";
 
 import * as React from 'react';
-import { BottomNavigation, BottomNavigationAction, Box, IconButton } from '@mui/material';
+import { BottomNavigation, BottomNavigationAction, Box, IconButton, Avatar } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import LoginIcon from '@mui/icons-material/Login';
-import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import LogoutIcon from '@mui/icons-material/Logout';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'; // Default profile icon
+import { useRouter, usePathname } from 'next/navigation';
+import { useSession, signOut } from "next-auth/react";
+import { useTheme } from "../app/providers/ThemeProvider";
+import { getAvatarUrl } from "@/utils/avatar";
+import PersonIcon from '@mui/icons-material/Person';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import { useRouter } from 'next/navigation';
-import { useSession, signOut } from "next-auth/react";
-import { useTheme } from "../app/providers/ThemeProvider"; // Import the custom useTheme hook
+import { useProfile } from '@/hooks/useProfile';
 
 export default function Navbar() {
-  const [value, setValue] = React.useState('/');
   const router = useRouter();
-  const { status } = useSession();
-  const { toggleTheme, isDarkMode } = useTheme(); // Access theme context
+  const pathname = usePathname();
+  const { data: session, status } = useSession();
+  const { toggleTheme, isDarkMode } = useTheme();
+  const { profile } = useProfile();
 
   const handleNavigation = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
     if (newValue === '/auth/odhlasenie') {
       signOut({
         callbackUrl: '/',
@@ -32,46 +32,60 @@ export default function Navbar() {
     }
   };
 
-  // Non-authenticated navigation paths
-  const nonAuthPaths = [
-    { label: "Domov", value: "/", icon: <HomeIcon /> },
-    { label: "O nás", value: "/o-nas", icon: <AddCircleIcon /> },
-    { label: "Registrácia", value: "/auth/registracia", icon: <AppRegistrationIcon /> },
-    { label: "Prihlásenie", value: "/auth/prihlasenie", icon: <LoginIcon /> },
-  ];
-
-  // Authenticated navigation paths
-  const authPaths = [
-    { label: "Domov", value: "/", icon: <HomeIcon /> },
-    { label: "Hľadať", value: "/hladanie", icon: <SearchIcon /> },
-    { label: "Pridať", value: "/pridat", icon: <AddCircleIcon /> },
-    {
-      label: "Profil",
-      value: "/profil",
-      icon: <AccountCircleIcon /> // Default profile icon
-    },
-    { label: "Odhlásiť", value: "/auth/odhlasenie", icon: <LogoutIcon /> },
-  ];
-
-  // Decide which paths to use based on authentication status
-  const navigationPaths = status === "authenticated" ? authPaths : nonAuthPaths;
-
   return (
-    <Box sx={{ width: '100%', position: 'fixed', bottom: 0, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <Box sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1000 }}>
       <BottomNavigation
-        showLabels
-        value={value}
+        value={pathname}
         onChange={handleNavigation}
-        sx={{ flexGrow: 1 }}
+        sx={{
+          height: 60,
+          borderTop: '1px solid',
+          borderColor: 'divider',
+          bgcolor: 'background.paper',
+        }}
       >
-        {navigationPaths.map((path) => (
-          <BottomNavigationAction
-            key={path.value}
-            label={path.label}
-            value={path.value}
-            icon={path.icon}
-          />
-        ))}
+        <BottomNavigationAction
+          label="Domov"
+          value="/"
+          icon={<HomeIcon />}
+        />
+        <BottomNavigationAction
+          label="Hľadať"
+          value="/hladanie"
+          icon={<SearchIcon />}
+        />
+        <BottomNavigationAction
+          label="Pridať"
+          value="/prispevky/vytvorit"
+          icon={<AddCircleIcon />}
+        />
+        <BottomNavigationAction
+          label="Profil"
+          value="/profil"
+          icon={
+            session?.user ? (
+              <Avatar
+                src={profile?.avatarUrl || getAvatarUrl(session.user.name, session.user.image)}
+                alt={session.user.name || "Profile"}
+                sx={{
+                  width: 24,
+                  height: 24,
+                  border: '2px solid white',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                }}
+              >
+                {session.user.name?.[0] || "U"}
+              </Avatar>
+            ) : (
+              <PersonIcon />
+            )
+          }
+        />
+        <BottomNavigationAction
+          label="Odhlásiť"
+          value="/auth/odhlasenie"
+          icon={<LogoutIcon />}
+        />
       </BottomNavigation>
 
       {/* Theme toggle button */}

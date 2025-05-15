@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/authOptions";
-import NonAuthHomeView from "@/sections/NonAuthHomeView"; // Import the NonAuthHomeView component
+import NonAuthHomeView from "@/sections/NonAuthHomeView";
 
 export const metadata = { title: "Domov | ZoškaSnap" };
 
@@ -14,5 +14,5 @@ export default async function HomePage() {
     redirect("/prispevok");
   }
 
-  return <NonAuthHomeView />;  
+  return <NonAuthHomeView />;
 }
